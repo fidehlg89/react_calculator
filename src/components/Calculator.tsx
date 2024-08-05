@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+
+const Button = ({ onClick, children, className = '' }) => (
+  <button
+    className={`p-2 bg-gray-200 rounded-md hover:bg-gray-300 ${className}`}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
 
 const Calculator = () => {
   const [input, setInput] = useState('');
 
-  const handleButtonClick = (value: string) => {
-    setInput(input + value);
-  };
+  const handleButtonClick = useCallback((value) => {
+    setInput((prevInput) => prevInput + value);
+  }, []);
 
-  const handleEquals = () => {
+  const handleEquals = useCallback(() => {
     try {
-      const result = eval(input);
-      setInput(result);
+      // Using Function constructor to evaluate the expression
+      const result = Function(`"use strict"; return (${input})`)();
+      setInput(String(result));
     } catch (error) {
       setInput('Error');
     }
-  };
+  }, [input]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setInput('');
-  };
+  }, []);
 
   return (
     <div className="max-w-md mx-auto p-4 bg-gray-100 rounded-md shadow-md">
@@ -30,108 +40,36 @@ const Calculator = () => {
         readOnly
       />
       <div className="grid grid-cols-4 gap-2 mt-4">
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('7')}
-        >
-          7
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('8')}
-        >
-          8
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('9')}
-        >
-          9
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('/')}
-        >
-          /
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('4')}
-        >
-          4
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('5')}
-        >
-          5
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('6')}
-        >
-          6
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('*')}
-        >
-          *
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('1')}
-        >
-          1
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('2')}
-        >
-          2
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('3')}
-        >
-          3
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('-')}
-        >
-          -
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('0')}
-        >
-          0
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('.')}
-        >
-          .
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={handleEquals}
-        >
-          =
-        </button>
-        <button
-          className="p-2 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={() => handleButtonClick('+')}
-        >
-          +
-        </button>
-        <button
-          className="p-2 bg-red-500 rounded-md hover:bg-red-600 text-white col-span-4"
+        {['7', '8', '9', '/'].map((value) => (
+          <Button key={value} onClick={() => handleButtonClick(value)}>
+            {value}
+          </Button>
+        ))}
+        {['4', '5', '6', '*'].map((value) => (
+          <Button key={value} onClick={() => handleButtonClick(value)}>
+            {value}
+          </Button>
+        ))}
+        {['1', '2', '3', '-'].map((value) => (
+          <Button key={value} onClick={() => handleButtonClick(value)}>
+            {value}
+          </Button>
+        ))}
+        {['0', '.', '=', '+'].map((value) => (
+          <Button
+            key={value}
+            onClick={value === '=' ? handleEquals : () => handleButtonClick(value)}
+            className={value === '=' ? 'bg-gray-200 rounded-md hover:bg-gray-300' : ''}
+          >
+            {value}
+          </Button>
+        ))}
+        <Button
           onClick={handleClear}
+          className="bg-red-500 hover:bg-red-600 text-white col-span-4"
         >
           Clear
-        </button>
+        </Button>
       </div>
     </div>
   );
