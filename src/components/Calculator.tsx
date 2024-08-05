@@ -10,7 +10,7 @@ const Calculator = () => {
   const handleEquals = () => {
     try {
       const result = eval(input);
-      setInput(input + ' = ' + result);
+      setInput(result);
     } catch (error) {
       setInput('Error');
     }
