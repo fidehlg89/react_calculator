@@ -1,6 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import { PropsWithChildren, useCallback, useState } from "react";
 
-const Button = ({ onClick, children, className = '' }) => (
+type ButtonProps = PropsWithChildren & {
+  onClick: () => void;
+  className?: string | undefined;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  onClick,
+  children,
+  className = "",
+}) => (
   <button
     className={`p-2 bg-gray-200 rounded-md hover:bg-gray-300 ${className}`}
     onClick={onClick}
@@ -10,9 +19,9 @@ const Button = ({ onClick, children, className = '' }) => (
 );
 
 const Calculator = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
-  const handleButtonClick = useCallback((value) => {
+  const handleButtonClick = useCallback((value: string) => {
     setInput((prevInput) => prevInput + value);
   }, []);
 
@@ -22,12 +31,12 @@ const Calculator = () => {
       const result = Function(`"use strict"; return (${input})`)();
       setInput(String(result));
     } catch (error) {
-      setInput('Error');
+      setInput("Error");
     }
   }, [input]);
 
   const handleClear = useCallback(() => {
-    setInput('');
+    setInput("");
   }, []);
 
   return (
@@ -40,26 +49,30 @@ const Calculator = () => {
         readOnly
       />
       <div className="grid grid-cols-4 gap-2 mt-4">
-        {['7', '8', '9', '/'].map((value) => (
+        {["7", "8", "9", "/"].map((value) => (
           <Button key={value} onClick={() => handleButtonClick(value)}>
             {value}
           </Button>
         ))}
-        {['4', '5', '6', '*'].map((value) => (
+        {["4", "5", "6", "*"].map((value) => (
           <Button key={value} onClick={() => handleButtonClick(value)}>
             {value}
           </Button>
         ))}
-        {['1', '2', '3', '-'].map((value) => (
+        {["1", "2", "3", "-"].map((value) => (
           <Button key={value} onClick={() => handleButtonClick(value)}>
             {value}
           </Button>
         ))}
-        {['0', '.', '=', '+'].map((value) => (
+        {["0", ".", "=", "+"].map((value) => (
           <Button
             key={value}
-            onClick={value === '=' ? handleEquals : () => handleButtonClick(value)}
-            className={value === '=' ? 'bg-gray-200 rounded-md hover:bg-gray-300' : ''}
+            onClick={
+              value === "=" ? handleEquals : () => handleButtonClick(value)
+            }
+            className={
+              value === "=" ? "bg-gray-200 rounded-md hover:bg-gray-300" : ""
+            }
           >
             {value}
           </Button>
