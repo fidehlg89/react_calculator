@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+# 🧮 React Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and clean calculator built with **React** and **Vite**, designed to practice component-based architecture, hooks, and basic state management.
 
-Currently, two official plugins are available:
+This project demonstrates how to build a functional calculator UI with reusable components and modern frontend tooling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Basic arithmetic operations:
+  - Addition (+)
+  - Subtraction (−)
+  - Multiplication (×)
+  - Division (÷)
+- Clear input functionality
+- Responsive grid-based layout
+- Reusable button component
+- Optimized performance using `useCallback`
+- Clean and readable code structure
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## 🛠️ Tech Stack
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React**
+- **Vite**
+- **TypeScript**
+- **Tailwind CSS**
+
+---
+
+## 🔗 Project URL
+
+- https://react-calculator-seven-rho.vercel.app/
+
+
+
